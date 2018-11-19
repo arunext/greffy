@@ -30,7 +30,7 @@ def webhook():
 
 def processRequest(req):
     print ("started processing ...")
-    if req.get("queryResult").get("action") != "yahooWeatherForecast":
+    if req.get("result").get("action") != "yahooWeatherForecast":
         print ("Action not yahooWeatherForecast")
         return {}
     print ("Action is yahooweather")
@@ -54,7 +54,7 @@ def processRequest(req):
 
 def makeYqlQuery(req):
     print ("Making yql query")
-    result = req.get("queryResult")
+    result = req.get("result")
     parameters = result.get("parameters")
     city = parameters.get("geo-city")
     if city is None:
