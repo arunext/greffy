@@ -30,15 +30,14 @@ def webhook():
 
 def processRequest(req):
     print ("started processing ...")
+    url = eq.get("result").get("parameters").get("url")
+    print (url)
     if req.get("result").get("action") != "yahooWeatherForecast":
         print ("Action not yahooWeatherForecast")
         return {}
-    print ("Action is yahooweather")
     baseurl = "https://query.yahooapis.com/v1/public/yql?"
     yql_query = makeYqlQuery(req)
-    print ("yql query created")
     if yql_query is None:
-        print("yqlquery is empty")
         return {}
     yql_url = baseurl + urllib.urlencode({'q': yql_query}) + "&format=json"
     print(yql_url)
@@ -53,15 +52,12 @@ def processRequest(req):
 
 
 def makeYqlQuery(req):
-    print ("Making yql query")
     result = req.get("result")
     parameters = result.get("parameters")
     city = parameters.get("geo-city")
     if city is None:
-        print("city is none")
         return None
 
-    print(city)
     return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
 
 
