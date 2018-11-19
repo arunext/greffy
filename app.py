@@ -33,6 +33,7 @@ def processRequest(req):
     if req.get("result").get("action") != "yahooWeatherForecast":
         print ("Action not yahooWeatherForecast")
         return {}
+    print ("Action is yahooweather")
     baseurl = "https://query.yahooapis.com/v1/public/yql?"
     yql_query = makeYqlQuery(req)
     print ("yql query created")
