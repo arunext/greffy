@@ -30,7 +30,7 @@ def webhook():
 
 def processRequest(req):
     print ("started processing ...")
-    url = eq.get("result").get("parameters").get("url")
+    url = req.get("result").get("parameters").get("url")
     print (url)
     if req.get("result").get("action") != "yahooWeatherForecast":
         print ("Action not yahooWeatherForecast")
