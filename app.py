@@ -30,9 +30,11 @@ def webhook():
 
 def processRequest(req):
     print ("started processing ...")
-    url = req.get("result").get("parameters").get("url")
-    print (url)
+
     if req.get("result").get("action") != "yahooWeatherForecast":
+        if req.get("result").get("action") == "urlProcessRequest":
+            url = req.get("result").get("parameters").get("url")
+            print (url)
         print ("Action not yahooWeatherForecast")
         return {}
     baseurl = "https://query.yahooapis.com/v1/public/yql?"
