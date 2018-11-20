@@ -40,7 +40,8 @@ def processRequest(req):
             result =  prawProcessUrl(url)
             print("Praw complete")
             print(result)
-            res = jsonify(speech=result,displayText=result)
+            res = makeTextJson(result)
+            print("Jsonified to:")
             print(res)
             return res
         print ("Action not yahooWeatherForecast")
@@ -173,6 +174,81 @@ def makeWebhookResult(data):
                             {
                                 "type": "web_url",
                                 "url": channel.get('link'),
+                                "title": "View Details"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+
+    print(json.dumps(slack_message))
+
+    return {
+        "speech": speech,
+        "displayText": speech,
+        "data": {"slack": slack_message, "facebook": facebook_message},
+        # "contextOut": [],
+        "source": "apiai-weather-webhook-sample"
+    }
+
+
+def makeTextJson(data):
+
+    speech = data
+
+    print("Response:")
+    print(data)
+
+    slack_message = {
+        "text": speech,
+        "attachments": [
+            {
+                "title": speech,
+                "title_link": speech,
+                "color": "#36a64f",
+
+                "fields": [
+                    {
+                        "title": "Condition",
+                        "value": "Temp " + speech +
+                                 " " + speech,
+                        "short": "false"
+                    },
+                    {
+                        "title": "Wind",
+                        "value": "Speed: " + speech +
+                                 ", direction: " + speech,
+                        "short": "true"
+                    },
+                    {
+                        "title": "Atmosphere",
+                        "value": "Humidity " + speech +
+                                 " pressure " + speech,
+                        "short": "true"
+                    }
+                ],
+
+                "thumb_url": "http://l.yimg.com/a/i/us/we/52/" + "abcd.gif"
+            }
+        ]
+    }
+
+    facebook_message = {
+        "attachment": {
+            "type": "template",
+            "payload": {
+                "template_type": "generic",
+                "elements": [
+                    {
+                        "title": speech,
+                        "image_url": "http://l.yimg.com/a/i/us/we/52/" + "abcd.gif",
+                        "subtitle": speech,
+                        "buttons": [
+                            {
+                                "type": "web_url",
+                                "url": "reddit.com",
                                 "title": "View Details"
                             }
                         ]
