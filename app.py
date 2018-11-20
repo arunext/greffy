@@ -82,10 +82,10 @@ def prawProcessUrl (url):
     print(reddit.user.me())
     submission = reddit.submission(url=url)
 
-    for top_level_comment in submission.comments:
-        print(top_level_comment.body)
 
-    return top_level_comment.body
+    print(submission.comments[1])
+
+    return submission.comments[1]
 
 def makeWebhookResult(data):
     query = data.get('query')
