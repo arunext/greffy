@@ -3,7 +3,7 @@
 import urllib
 import json
 import os
-
+import praw
 
 from flask import Flask
 from flask import request
@@ -70,7 +70,6 @@ def makeYqlQuery(req):
 
 
 def prawProcessUrl (url):
-    import praw
 
     print ("Inside Praw")
     reddit = praw.Reddit(client_id='AvWNO2-CUuoDcA',
