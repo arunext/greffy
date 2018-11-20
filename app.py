@@ -35,6 +35,7 @@ def processRequest(req):
     if req.get("result").get("action") != "yahooWeatherForecast":
         if req.get("result").get("action") == "urlProcessRequest":
             url = req.get("result").get("parameters").get("url")
+            print("Processing Praw")
             result =  prawProcessUrl(url)
             print("Praw complete")
             data = json.loads(result)
@@ -71,18 +72,20 @@ def makeYqlQuery(req):
 def prawProcessUrl (url):
     import praw
 
+    print ("Inside Praw")
     reddit = praw.Reddit(client_id='AvWNO2-CUuoDcA',
                      client_secret='R67wmcaVE-D02kuUQW2sw8alCO4',
                      password='fAT-xE3-ADt-rRa',
                      user_agent='greffy by /u/arunext',
                      username='arunext')
 
+    print ("Got reddit")
     print(reddit.user.me())
     submission = reddit.submission(url=url)
 
     for top_level_comment in submission.comments:
         print(top_level_comment.body)
-            
+
     return top_level_comment.body
 
 def makeWebhookResult(data):
