@@ -38,9 +38,8 @@ def processRequest(req):
             print("Processing Praw")
             result =  prawProcessUrl(url)
             print("Praw complete")
-            data = json.loads(result)
-            res = makeWebhookResult(data)
-            return res
+            print(result)
+            return result
         print ("Action not yahooWeatherForecast")
         return {}
     baseurl = "https://query.yahooapis.com/v1/public/yql?"
@@ -82,10 +81,12 @@ def prawProcessUrl (url):
     print(reddit.user.me())
     submission = reddit.submission(url=url)
 
+    for top_level_comment in submission.comments:
+        top_comment = top_level_comment.body
+        break
 
-    print(submission.comments[1])
-
-    return submission.comments[1]
+    print top_comment
+    return top_comment
 
 def makeWebhookResult(data):
     query = data.get('query')
