@@ -39,7 +39,8 @@ def processRequest(req):
             print("Processing Praw")
             result =  prawProcessUrl(url)
             print("Praw complete")
-            jsonify(speech=result,displayText=result)
+            print(result)
+            res = jsonify(speech=result,displayText=result)
             print(res)
             return res
         print ("Action not yahooWeatherForecast")
