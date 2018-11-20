@@ -4,6 +4,7 @@ import urllib
 import json
 import os
 
+
 from flask import Flask
 from flask import request
 from flask import make_response
@@ -34,7 +35,11 @@ def processRequest(req):
     if req.get("result").get("action") != "yahooWeatherForecast":
         if req.get("result").get("action") == "urlProcessRequest":
             url = req.get("result").get("parameters").get("url")
-            print (url)
+            result =  prawProcessUrl(url)
+            print("Praw complete")
+            data = json.loads(result)
+            res = makeWebhookResult(data)
+            return res
         print ("Action not yahooWeatherForecast")
         return {}
     baseurl = "https://query.yahooapis.com/v1/public/yql?"
@@ -62,6 +67,23 @@ def makeYqlQuery(req):
 
     return "select * from weather.forecast where u='c' and woeid in (select woeid from geo.places(1) where text='" + city + "')"
 
+
+def prawProcessUrl (url):
+    import praw
+
+    reddit = praw.Reddit(client_id='AvWNO2-CUuoDcA',
+                     client_secret='R67wmcaVE-D02kuUQW2sw8alCO4',
+                     password='fAT-xE3-ADt-rRa',
+                     user_agent='greffy by /u/arunext',
+                     username='arunext')
+
+    print(reddit.user.me())
+    submission = reddit.submission(url=url)
+
+    for top_level_comment in submission.comments:
+        print(top_level_comment.body)
+            
+    return top_level_comment.body
 
 def makeWebhookResult(data):
     query = data.get('query')
