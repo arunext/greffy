@@ -8,6 +8,7 @@ import praw
 from flask import Flask
 from flask import request
 from flask import make_response
+from flask import jsonify
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -38,8 +39,9 @@ def processRequest(req):
             print("Processing Praw")
             result =  prawProcessUrl(url)
             print("Praw complete")
-            print(result)
-            return result
+            jsonify(speech=result,displayText=result)
+            print(res)
+            return res
         print ("Action not yahooWeatherForecast")
         return {}
     baseurl = "https://query.yahooapis.com/v1/public/yql?"
@@ -60,7 +62,6 @@ def processRequest(req):
     print("The result before retur is")
     print res
     return res
-
 
 def makeYqlQuery(req):
     result = req.get("result")
