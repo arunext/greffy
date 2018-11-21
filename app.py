@@ -29,9 +29,9 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
-@app.route('/hello')
+@app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return 'Welcome to Greffy. We promore open minds and close communities.'
 
 
 def processRequest(req):
