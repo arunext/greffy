@@ -29,6 +29,10 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
+@app.route('/hello')
+def hello_world():
+    return 'Hello, World!'
+
 
 def processRequest(req):
     print ("started processing ...")
