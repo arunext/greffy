@@ -31,7 +31,7 @@ def webhook():
 
 @app.route('/')
 def hello_world():
-    return 'Welcome to Greffy. A close community with open minds. Somthing will be here soon.'
+    return 'Welcome to Greffy. A close community with open minds. You will learn more soon.'
 
 
 def processRequest(req):
