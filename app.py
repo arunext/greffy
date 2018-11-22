@@ -4,6 +4,7 @@ import urllib
 import json
 import os
 import praw
+import unirest
 
 from flask import Flask
 from flask import request
@@ -38,14 +39,7 @@ def processRequest(req):
 
     if req.get("result").get("action") != "yahooWeatherForecast":
         if req.get("result").get("action") == "urlProcessRequest":
-            url = req.get("result").get("parameters").get("url")
-            print("Processing Praw")
-            result =  prawProcessUrl(url)
-            print("Praw complete")
-            print(result)
-            res = makeTextJson(result)
-            print("Jsonified to:")
-            print(res)
+            res = processUrl(req)
             return res
         print ("Action not yahooWeatherForecast")
         return {}
@@ -97,6 +91,22 @@ def prawProcessUrl (url):
 
     print top_comment
     return top_comment
+
+def processUrl(req):
+        url = req.get("result").get("parameters").get("url")
+
+        if "reddit.com" in url
+            result =  prawProcessUrl(url)
+            print("Praw complete")
+            print(result)
+            res = makeTextJson(result)
+            print("Jsonified to:")
+            print(res)
+            return res
+        else
+            response = unirest.post(url, headers={ "Accept": "application/json" }, params={ "url": url, "setnum": 6 })
+            res = response.body
+            return res
 
 def makeWebhookResult(data):
     query = data.get('query')
