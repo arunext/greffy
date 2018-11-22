@@ -117,7 +117,6 @@ def processUrl(req):
             "Content-Type": "application/json",
             "Accept": "application/json"
           },
-          # re.escape is to add backslash before all special charaters
           params=("{\"url\":" + re.sub("/", "\/"  , url) + ",\"text\":\"\",\"sentnum\":8}")
         )
 
