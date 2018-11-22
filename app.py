@@ -95,7 +95,7 @@ def prawProcessUrl (url):
 def processUrl(req):
         url = req.get("result").get("parameters").get("url")
 
-        if url.find('reddit.com'):
+        if url.find("reddit > 0):
             result =  prawProcessUrl(url)
             print("Praw complete")
             print(result)
