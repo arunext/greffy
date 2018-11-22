@@ -121,8 +121,8 @@ def processUrl(req):
         #)
         # re.escape is to add backslash before all special charaters
         print("new:")
-        print("passing" + re.sub("/","\/",url) )
-        
+        print("passing: " + re.sub("/","\/",url) )
+
         print("unirest complete")
         sentence = response.body.get("sentences")
         print(sentence)
