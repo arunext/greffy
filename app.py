@@ -5,6 +5,7 @@ import json
 import os
 import praw
 import unirest
+import re
 
 from flask import Flask
 from flask import request
@@ -121,8 +122,8 @@ def processUrl(req):
         #)
         # re.escape is to add backslash before all special charaters
         print("new:" +  url)
-        print("passing: " + re.sub("/","\/",url) )
-
+        new_url =  re.sub("/","\/",url)
+        print(new_url)
         print("unirest complete")
         sentence = response.body.get("sentences")
         print(sentence)
