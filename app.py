@@ -120,7 +120,9 @@ def processUrl(req):
         )
         print("unirest complete")
         print(response)
-        result = response.body
+        result = response[0]["sentences"]
+
+        print("Result is:")
         print(result)
         res = makeTextJson(result)
         print("Jsonified to text")
