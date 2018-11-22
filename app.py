@@ -109,7 +109,14 @@ def processUrl(req):
         return res
     else:
         print("Inside non-reddit, doing unirest")
-        response = unirest.post(url, headers={ "Accept": "application/json" }, params={ "url": url, "setnum": 6 })
+        response = unirest.post("https://textanalysis-text-summarization.p.mashape.com/text-summarizer",
+          headers={
+            "X-Mashape-Key": "oz0JfIM2BVmshrK6jybJa9VO9Lvkp1jVTJdjsnsqzjJv1QwnxA",
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          params=("{\"url\":\url,\"text\":\"\",\"sentnum\":8}")
+        )
         res = response.body
         print("Body:")
         print(response.body)
