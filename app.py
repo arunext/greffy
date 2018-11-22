@@ -120,9 +120,9 @@ def processUrl(req):
          #          params=("{\"url\":" + re.sub("/", "\/"  , url) + ",\"text\":\"\",\"sentnum\":8}")
         #)
         # re.escape is to add backslash before all special charaters
-        print("new")
-        print("passing" + re.sub("/", "\/"  , url))
-
+        print("new:")
+        print("passing" + re.sub("/","\/",url) )
+        
         print("unirest complete")
         sentence = response.body.get("sentences")
         print(sentence)
