@@ -112,7 +112,8 @@ def processUrl(req):
         print("Inside non-reddit, doing unirest")
 
         # These code snippets use an open-source library. http://unirest.io/python
-        paramtopass = "{\"url\":\""+url+"\",\"text\":\"\",\"sentnum\":8}"
+
+        paramtopass = "{\"url\":\""+url+"\",\"text\":\"\",\"sentnum\":4}"
         print(paramtopass)
         # These code snippets use an open-source library. http://unirest.io/python
         response = unirest.post("https://textanalysis-text-summarization.p.mashape.com/text-summarizer",
@@ -121,7 +122,7 @@ def processUrl(req):
             "Content-Type": "application/json",
             "Accept": "application/json"
           },
-          params=("{\"url\":\""+re.sub("/", "\/", url)+"\",\"text\":\"\",\"sentnum\":4}")
+          params=(paramtopass)
         )
 
         print("unirest complete")
