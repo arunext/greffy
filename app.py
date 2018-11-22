@@ -39,6 +39,7 @@ def processRequest(req):
 
     if req.get("result").get("action") != "yahooWeatherForecast":
         if req.get("result").get("action") == "urlProcessRequest":
+            print("URL process task")
             res = processUrl(req)
             return res
         print ("Action not yahooWeatherForecast")
@@ -93,23 +94,26 @@ def prawProcessUrl (url):
     return top_comment
 
 def processUrl(req):
-        url = req.get("result").get("parameters").get("url")
+    url = req.get("result").get("parameters").get("url")
 
-        if url.find("reddit" > 0):
-            result =  prawProcessUrl(url)
-            print("Praw complete")
-            print(result)
-            res = makeTextJson(result)
-            print("Jsonified to:")
-            print(res)
-            return res
-        else:
-            print("Inside non-reddit, doing unirest")
-            response = unirest.post(url, headers={ "Accept": "application/json" }, params={ "url": url, "setnum": 6 })
-            res = response.body
-            print("Body:")
-            print(response.body)
-            return res
+    print("inside processUrl")
+    if url.find("reddit" > 0):
+        result =  prawProcessUrl(url)
+        print("Praw complete")
+        print(result)
+        res = makeTextJson(result)
+        print("Jsonified to:")
+        print(res)
+        return res
+    else:
+        print("Inside non-reddit, doing unirest")
+        response = unirest.post(url, headers={ "Accept": "application/json" }, params={ "url": url, "setnum": 6 })
+        res = response.body
+        print("Body:")
+        print(response.body)
+        return res
+
+    return res
 
 def makeWebhookResult(data):
     query = data.get('query')
