@@ -121,7 +121,8 @@ def processUrl(req):
           params=("{\"url\":" + re.sub("/", "\/"  , url) + ",\"text\":\"\",\"sentnum\":8}")
         )
 
-        print("unirest complete")
+        print("unirest complete")\
+        print(response.body)
         sentence = response.body.get("sentences")
         print(sentence)
         result = ' '.join(sentence)
