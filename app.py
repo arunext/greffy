@@ -109,13 +109,14 @@ def processUrl(req):
         return res
     else:
         print("Inside non-reddit, doing unirest")
+        # These code snippets use an open-source library. http://unirest.io/python
         response = unirest.post("https://textanalysis-text-summarization.p.mashape.com/text-summarizer",
           headers={
             "X-Mashape-Key": "oz0JfIM2BVmshrK6jybJa9VO9Lvkp1jVTJdjsnsqzjJv1QwnxA",
             "Content-Type": "application/json",
             "Accept": "application/json"
           },
-          params=("{\"url\":url,\"text\":\"\",\"sentnum\":8}")
+          params=("{\"url\":\"http://en.wikipedia.org/wiki/Automatic_summarization\",\"text\":\"\",\"sentnum\":8}")
         )
         res = response.body
         print(response.body)
