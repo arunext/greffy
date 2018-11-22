@@ -116,12 +116,12 @@ def processUrl(req):
             "Content-Type": "application/json",
             "Accept": "application/json"
           },
-          params=("{\"url\":url,\"text\":\"\",\"sentnum\":8}")
+          params=("{\"url\":url,\"text\":\"\",\"sentnum\":4}")
         )
-        print("unirest complete")
-        print(response)
-        result = response.body.get("sentences")[0]
 
+        print("unirest complete")
+        sentence = response.body.get("sentences")
+        print(sentence)
         result = ' '.join(sentence)
 
         print("Result is:")
