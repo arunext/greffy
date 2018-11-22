@@ -120,7 +120,7 @@ def processUrl(req):
         )
         print("unirest complete")
         print(response)
-        result = response[0]["sentences"]
+        result = response.body[0]["sentences"]
 
         print("Result is:")
         print(result)
