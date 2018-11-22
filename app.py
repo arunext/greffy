@@ -104,8 +104,11 @@ def processUrl(req):
             print(res)
             return res
         else:
+            print("Inside non-reddit, doing unirest")
             response = unirest.post(url, headers={ "Accept": "application/json" }, params={ "url": url, "setnum": 6 })
             res = response.body
+            print("Body:")
+            print(response.body)
             return res
 
 def makeWebhookResult(data):
