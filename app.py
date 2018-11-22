@@ -117,7 +117,7 @@ def processUrl(req):
             "Accept": "application/json"
           },
           # re.escape is to add backslash before all special charaters
-          params=("{\"url\":" + re.escape( + ",\"text\":\"\",\"sentnum\":8}")
+          params=("{\"url\":" + re.escape(url) + ",\"text\":\"\",\"sentnum\":8}")
         )
 
         print("unirest complete")
