@@ -120,7 +120,7 @@ def processUrl(req):
             "Content-Type": "application/json",
             "Accept": "application/json"
           },
-          params=("{\"url\":\"http://en.wikipedia.org/wiki/Automatic_summarization\",\"text\":\"\",\"sentnum\":8}")
+          params=("{\"url\":\""+url+"\",\"text\":\"\",\"sentnum\":8}")
         )
 
         print("unirest complete")
