@@ -103,7 +103,7 @@ def processUrl(req):
             print("Jsonified to:")
             print(res)
             return res
-        else
+        else:
             response = unirest.post(url, headers={ "Accept": "application/json" }, params={ "url": url, "setnum": 6 })
             res = response.body
             return res
