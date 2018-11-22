@@ -118,8 +118,9 @@ def processUrl(req):
           },
           params=("{\"url\":\"http://en.wikipedia.org/wiki/Automatic_summarization\",\"text\":\"\",\"sentnum\":8}")
         )
+        print(response)
         result = response.body.sentences
-        print(response.body.sentences)
+        print(result)
         res = makeTextJson(result)
         print("Jsonified to:")
         print(res)
