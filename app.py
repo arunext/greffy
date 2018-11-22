@@ -117,10 +117,11 @@ def processUrl(req):
             "Content-Type": "application/json",
             "Accept": "application/json"
           },
-          params=("{\"url\":" + re.sub("/", "\/"  , url) + ",\"text\":\"\",\"sentnum\":6}")
+          # re.escape is to add backslash before all special charaters
+          params=("{\"url\":" + re.sub("/", "\/"  , url) + ",\"text\":\"\",\"sentnum\":8}")
         )
 
-        print("response:" + response.body)
+        print("unirest complete")
         sentence = response.body.get("sentences")
         print(sentence)
         result = ' '.join(sentence)
