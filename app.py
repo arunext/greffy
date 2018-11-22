@@ -115,10 +115,9 @@ def processUrl(req):
             "Content-Type": "application/json",
             "Accept": "application/json"
           },
-          params=("{\"url\":\url,\"text\":\"\",\"sentnum\":8}")
+          params=("{\"url\":url,\"text\":\"\",\"sentnum\":8}")
         )
         res = response.body
-        print("Body:")
         print(response.body)
         return res
 
