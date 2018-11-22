@@ -98,7 +98,7 @@ def processUrl(req):
 
     print("inside processUrl to process")
     print(url)
-    if url.find("reddit" > 0):
+    if "reddit" in url:
         print("starting prwa")
         result =  prawProcessUrl(url)
         print("Praw complete")
