@@ -116,7 +116,7 @@ def processUrl(req):
             "Content-Type": "application/json",
             "Accept": "application/json"
           },
-          params=("{\"url\":url,\"text\":\"\",\"sentnum\":4}")
+          params=("{\"url\":"+ url + ",\"text\":\"\",\"sentnum\":8}")
         )
 
         print("unirest complete")
