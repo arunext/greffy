@@ -124,7 +124,7 @@ def processUrl(req):
 
         print("Result is:")
         print(result)
-        res = makeTextJson(result)s
+        res = makeTextJson(result)
         print("Jsonified to text")
         print(res)
         return res
