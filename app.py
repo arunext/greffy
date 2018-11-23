@@ -113,7 +113,8 @@ def processUrl(req):
 
         # These code snippets use an open-source library. http://unirest.io/python
 
-        paramtopass = "{\"url\":\""+url+"\",\"text\":\"\",\"sentnum\":4}"
+        #paramtopass = "{\"url\":\""+url+"\",\"text\":\"\",\"sentnum\":4}"
+        paramtopass = "{\"url\":\"http://en.wikipedia.org/wiki/Automatic_summarization\",\"text\":\"\",\"sentnum\":8}"
         print(paramtopass)
         # These code snippets use an open-source library. http://unirest.io/python
         response = unirest.post("https://textanalysis-text-summarization.p.mashape.com/text-summarizer",
