@@ -3,9 +3,10 @@
 import urllib
 import json
 import os
-import praw
-import unirest
-import re
+#import praw
+import unirest #call mashape for summarizer
+import re  # reglar expresson
+import psycopg2 # Postggress database
 
 from flask import Flask
 from flask import request
@@ -13,6 +14,7 @@ from flask import make_response
 from flask import jsonify
 from flask import render_template
 from textblob import TextBlob
+from config import config
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -43,8 +45,10 @@ def my_form_post():
     print("Got text" +  text + "Calling textblob")
     blob = TextBlob(text)
     print("Adedd to TB")
-    processed_text = blob.sentiment.polarity
-    print("Sentiment polarity = ", processed_text)
+    processed_text = str(blob.translate(to="es")) + "\n" + "Polarity:" + str(blob.sentiment.polarity) +  "and subjectivity: " + str(blob.sentiment.subjectivity)
+    print("Tanslated text = " + processed_text)
+
+    print(processed_text)
     return processed_text
 
 
@@ -90,19 +94,19 @@ def makeYqlQuery(req):
 def prawProcessUrl (url):
 
     print ("Inside Praw")
-    reddit = praw.Reddit(client_id='AvWNO2-CUuoDcA',
-                     client_secret='R67wmcaVE-D02kuUQW2sw8alCO4',
-                     password='fAT-xE3-ADt-rRa',
-                     user_agent='greffy by /u/arunext',
-                     username='arunext')
+#    reddit = praw.Reddit(client_id='AvWNO2-CUuoDcA',
+#                     client_secret='R67wmcaVE-D02kuUQW2sw8alCO4',
+#                     password='fAT-xE3-ADt-rRa',
+#                     user_agent='greffy by /u/arunext',
+#                     username='arunext')
 
     print ("Got reddit")
-    print(reddit.user.me())
-    submission = reddit.submission(url=url)
+#    print(reddit.user.me())
+#    submission = reddit.submission(url=url)
 
-    for top_level_comment in submission.comments:
-        top_comment = top_level_comment.body
-        break
+#    for top_level_comment in submission.comments:
+#        top_comment = top_level_comment.body
+#        break
 
     print top_comment
     return top_comment
@@ -327,10 +331,42 @@ def makeTextJson(data):
         "source": "apiai-weather-webhook-sample"
     }
 
+#Connect to Postgress DB. Configs in database.ini
+def connect():
+    """ Connect to the PostgreSQL database server """
+    conn = None
+    try:
+        # read connection parameters
+        params = config()
+
+        # connect to the PostgreSQL server
+        print('Connecting to the PostgreSQL database...')
+        conn = psycopg2.connect(**params)
+
+        # create a cursor
+        cur = conn.cursor()
+
+ # execute a statement
+        print('PostgreSQL database version:')
+        cur.execute('SELECT version()')
+
+        # display the PostgreSQL database server version
+        db_version = cur.fetchone()
+        print(db_version)
+
+     # close the communication with the PostgreSQL
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+            print('Database connection closed.')
+
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
 
     print ("Starting app on port %d" % port)
-
+    connect()
     app.run(debug=False, port=port, host='0.0.0.0')

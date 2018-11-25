@@ -1,4 +1,6 @@
 Flask==0.10.1
 praw>=3.1.0
 unirest>=1.1.7
-textblob>=0.15.2 
+textblob>=0.15.2
+psycopg2
+configparser>=3.5.0
