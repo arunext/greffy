@@ -279,11 +279,11 @@ def processUrlDB(url):
     if id == 0:
         print("ID is zero, inserting")
         insert_tables (random.randint(1,10000000), url) #add url into table
-        return makeTextJson("We haven't seen  this link before. Thanks for sharing")
+        return makeTextJson("We haven't seen  this link before. Thanks for sharing. Track trending topics here: goo.gl/w8vGrv")
     else:
         print("ID is not zero, updating")
         update_table(id, count+1)
-        return makeTextJson("This link was shared {0} times with us.".format(count+1))
+        return makeTextJson("This link was shared {0} times with us. For more info visit goo.gl/w8vGrv".format(count+1))
 
 
 def makeTextJson(data):
