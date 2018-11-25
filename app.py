@@ -26,9 +26,6 @@ app = Flask(__name__)
 def webhook():
     req = request.get_json(silent=True, force=True)
 
-    print("Request:")
-    print(json.dumps(req, indent=4))
-
     res = processRequest(req)
 
     res = json.dumps(res, indent=4)
@@ -68,7 +65,9 @@ def processRequest(req):
     if req.get("result").get("action") != "yahooWeatherForecast":
         if req.get("result").get("action") == "urlProcessRequest":
             print("URL process task")
-            res = processUrlDB(req)
+            url = req.get("result").get("parameters").get("url")
+            res = processUrlDB(url)
+            print("Done processing URL in DB ")
             return res
         print ("Action not yahooWeatherForecast")
         return {}
@@ -121,8 +120,7 @@ def prawProcessUrl (url):
     print top_comment
     return top_comment
 
-def processUrl(req):
-    url = req.get("result").get("parameters").get("url")
+def processUrl(url):
 
     print("inside processUrl to process")
     print(url)
