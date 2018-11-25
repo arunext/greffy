@@ -283,7 +283,7 @@ def processUrlDB(url):
     else:
         print("ID is not zero, updating")
         update_table(id, count+1)
-        return makeTextJson("This link was shared {0} times with us.")
+        return makeTextJson("This link was shared {0} times with us.".format(count+1))
 
 
 def makeTextJson(data):
