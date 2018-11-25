@@ -15,6 +15,8 @@ from flask import jsonify
 from flask import render_template
 from textblob import TextBlob
 from config import config
+from tables import create_tables
+from tables import insert_tables
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -47,6 +49,8 @@ def my_form_post():
     print("Adedd to TB")
     processed_text = str(blob.translate(to="es")) + "\n" + "Polarity:" + str(blob.sentiment.polarity) +  "and subjectivity: " + str(blob.sentiment.subjectivity)
     print("Tanslated text = " + processed_text)
+
+    processUrlDB(text)
 
     print(processed_text)
     return processed_text
@@ -256,6 +260,13 @@ def makeWebhookResult(data):
         "source": "apiai-weather-webhook-sample"
     }
 
+
+#Creating a URL in DB
+def processUrlDB(url):
+
+    print("creating tables with" + url)
+    create_tables() #creating table, later check if table exists.
+    insert_tables (url) #add url into table
 
 def makeTextJson(data):
 
