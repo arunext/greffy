@@ -68,7 +68,7 @@ def processRequest(req):
     if req.get("result").get("action") != "yahooWeatherForecast":
         if req.get("result").get("action") == "urlProcessRequest":
             print("URL process task")
-            res = processUrl(req)
+            res = processUrlDB(req)
             return res
         print ("Action not yahooWeatherForecast")
         return {}
@@ -272,8 +272,21 @@ def processUrlDB(url):
 
     print("creating tables with" + url)
     create_tables() #creating table, later check if table exists.
-    insert_tables (random.randint(1,10000000), url) #add url into table
-    return
+
+    id = 0
+    count = 0
+    id, count = lookup_table(url)
+    print("lookup returned id= {0}, count = {1}".format(id,count))
+
+    if id == 0:
+        print("ID is zero, inserting")
+        insert_tables (random.randint(1,10000000), url) #add url into table
+        return makeTextJson("We haven't seen  this link before. Thanks for sharing")
+    else:
+        print("ID is not zero, updating")
+        update_table(id, count+1)
+        return makeTextJson("This link was shared {0} times with us.")
+
 
 def makeTextJson(data):
 
