@@ -12,6 +12,7 @@ from flask import request
 from flask import make_response
 from flask import jsonify
 from flask import render_template
+from textblob import TextBlob
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -39,7 +40,8 @@ def my_form():
 @app.route('/', methods=['POST'])
 def my_form_post():
     text = request.form['text']
-    processed_text = text.upper()
+    blob = TextBlob(text)
+    processed_text = blob.translate(to="es")
     return processed_text
 
 
