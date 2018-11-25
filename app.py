@@ -41,7 +41,7 @@ def my_form():
 def my_form_post():
     text = request.form['text']
     blob = TextBlob(text)
-    processed_text = blob.translate(to="es")
+    processed_text = blob.sentiment.polarity
     return processed_text
 
 
