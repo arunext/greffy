@@ -2,63 +2,64 @@ import psycopg2
 from config import config
 
 def create_tables():
-    """ create tables in the PostgreSQL database"""
-    print("inside create tables")
-    commands = (
-        """
-        CREATE TABLE urls (
-            url VARCHAR(1000) PRIMARY KEY,
-            url_name VARCHAR(255) NOT NULL
-        )
-        """
-        )
-    conn = None
-    try:
-        # read the connection parameters
-        params = config()
-        # connect to the PostgreSQL server
-        conn = psycopg2.connect(**params)
-        cur = conn.cursor()
-        # create table one by one
-        for command in commands:
-            cur.execute(command)
-        # close communication with the PostgreSQL database server
-        cur.close()
-        # commit the changes
-        conn.commit()
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-    finally:
-        if conn is not None:
-            conn.close()
 
-def insert_tables(url):
-    """ insert a new vendor into the vendors table """
+    print("Inside create tables")
+    """ create tables in the PostgreSQL database"""
+    params = config()
+    # connect to the PostgreSQL server
+    conn = psycopg2.connect(**params)
+    print ("Opened database successfully")
+
+    cur = conn.cursor()
+    cur.execute('''CREATE TABLE IF NOT EXISTS POSTS
+         (ID INT PRIMARY KEY     NOT NULL,
+          DATA           TEXT    NOT NULL,
+          COUNT         INT);''')
+    print ("Table created successfully")
+
+    conn.commit()
+    conn.close()
+
+def show_table():
+
+    print("Inside show tables")
+    """ show tables from the PostgreSQL database"""
+    params = config()
+    # connect to the PostgreSQL server
+    conn = psycopg2.connect(**params)
+    print ("Opened database successfully")
+
+    cur = conn.cursor()
+
+    cur.execute("SELECT ID, DATA, COUNT from POSTS")
+    rows = cur.fetchall()
+
+    #table_text = ""
+    #for row in rows:
+     #  table_text += "Post ID = " + str(row[0])
+      # table_text += "Text = " + row[1]
+       #table_text += "Count = " + str(row[2]) + "\n"
+
+    print "Operation done successfully";
+    print(rows)
+    conn.close()
+    return rows
+
+def insert_tables(postid, text):
+    """ insert a new post into the vendors table """
 
     print("inside insert to tables")
-    sql = """INSERT INTO urls(url)
-             VALUES(%s) RETURNING url;"""
-    conn = None
-    vendor_id = None
-    try:
-        # read database configuration
-        params = config()
-        # connect to the PostgreSQL database
-        conn = psycopg2.connect(**params)
-        # create a new cursor
-        cur = conn.cursor()
-        # execute the INSERT statement
-        cur.execute(sql, (url,))
-        # get the generated id back
-        url = cur.fetchone()[0]
-        # commit the changes to the database
-        conn.commit()
-        # close communication with the database
-        cur.close()
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-    finally:
-        if conn is not None:
-            conn.close()
 
-    return vendor_id
+    # read database configuration
+    params = config()
+    # connect to the PostgreSQL database
+    conn = psycopg2.connect(**params)
+
+    cur = conn.cursor()
+
+    count = 0
+    cur.execute("INSERT INTO POSTS (ID,DATA,COUNT) VALUES (%s, %s, %s)",(postid,text,count));
+
+    conn.commit()
+    print("Records created successfully")
+    conn.close()

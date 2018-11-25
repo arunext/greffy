@@ -7,16 +7,16 @@ import os
 import unirest #call mashape for summarizer
 import re  # reglar expresson
 import psycopg2 # Postggress database
+import random
 
 from flask import Flask
 from flask import request
 from flask import make_response
 from flask import jsonify
-from flask import render_template
+from flask import render_template, redirect
 from textblob import TextBlob
 from config import config
-from tables import create_tables
-from tables import insert_tables
+from tables import *
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -37,23 +37,29 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
-@app.route('/')
+@app.route('/new')
 def my_form():
     return render_template('my-form.html')
 
-@app.route('/', methods=['POST'])
+@app.route('/')
+def display_table():
+    result = show_table()
+    return render_template("result.html",result = result)
+
+@app.route('/new', methods=['POST'])
 def my_form_post():
     text = request.form['text']
     print("Got text" +  text + "Calling textblob")
-    blob = TextBlob(text)
+    #blob = TextBlob(text)
     print("Adedd to TB")
-    processed_text = str(blob.translate(to="es")) + "\n" + "Polarity:" + str(blob.sentiment.polarity) +  "and subjectivity: " + str(blob.sentiment.subjectivity)
-    print("Tanslated text = " + processed_text)
+    #processed_text = str(blob.translate(to="es")) + "\n" + "Polarity:" + str(blob.sentiment.polarity) +  "and subjectivity: " + str(blob.sentiment.subjectivity)
+    print("Tanslated text = ")# + processed_text)
 
     processUrlDB(text)
 
-    print(processed_text)
-    return processed_text
+    #print(processed_text)
+    #return processed_text
+    return redirect("/")
 
 
 def processRequest(req):
@@ -266,7 +272,8 @@ def processUrlDB(url):
 
     print("creating tables with" + url)
     create_tables() #creating table, later check if table exists.
-    insert_tables (url) #add url into table
+    insert_tables (random.randint(1,10000000), url) #add url into table
+    return
 
 def makeTextJson(data):
 
