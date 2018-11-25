@@ -40,8 +40,11 @@ def my_form():
 @app.route('/', methods=['POST'])
 def my_form_post():
     text = request.form['text']
+    print("Got text" +  text + "Calling textblob")
     blob = TextBlob(text)
+    print("Adedd to TB")
     processed_text = blob.sentiment.polarity
+    print("Sentiment polarity = ", processed_text)
     return processed_text
 
 
