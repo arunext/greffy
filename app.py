@@ -32,8 +32,14 @@ def webhook():
     return r
 
 @app.route('/')
-def hello_world():
-    return 'Highlighting the grey in everything.'
+def my_form():
+    return render_template('my-form.html')
+    
+@app.route('/', methods=['POST'])
+def my_form_post():
+    text = request.form['text']
+    processed_text = text.upper()
+    return processed_text
 
 def processRequest(req):
     print ("started processing ...")
