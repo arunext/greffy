@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
 <style>
 table {
@@ -23,7 +24,7 @@ tr:nth-child(even) {
 </head>
 <body>
 
-<h2>Posts Received so far</h2>
+<h2>Trending Posts</h2>
 
 <a href="/new">New Post</a>
 
@@ -32,15 +33,13 @@ tr:nth-child(even) {
       <table>
       <thead>
       <tr>
-      <th>ID</th>
-      <th>Text Content</th>
-      <th>Count</th>
+      <th>Content</th>
+      <th>Shared</th>
       </tr>
       </thead>
       <tbody>
     {% for row in result %}
       <tr>
-          <td>{{ row[0] }}</td>
           <td>{{ row[1]}}</td>
           <td> {{ row[2] }}</td>
       </tr>
