@@ -38,25 +38,21 @@ def webhook():
 def my_form():
     return render_template('my-form.html')
 
+@app.route('/new', methods=['POST'])
+def my_form_post():
+    text = request.form['text']
+    processUrlDB(text)
+    return redirect("/")
+
 @app.route('/')
 def display_table():
     result = show_table()
     return render_template("home.html",result = result)
 
-
-@app.route('/new', methods=['POST'])
-def my_form_post():
+@app.route('/', methods=['POST'])
+def home_post():
     text = request.form['text']
-    print("Got text" +  text + "Calling textblob")
-    #blob = TextBlob(text)
-    print("Adedd to TB")
-    #processed_text = str(blob.translate(to="es")) + "\n" + "Polarity:" + str(blob.sentiment.polarity) +  "and subjectivity: " + str(blob.sentiment.subjectivity)
-    print("Tanslated text = ")# + processed_text)
-
     processUrlDB(text)
-
-    #print(processed_text)
-    #return processed_text
     return redirect("/")
 
 #post pages
@@ -288,7 +284,7 @@ def processUrlDB(url):
     postid, count = lookup_table(url)
     print("lookup returned id= {0}, count = {1}".format(postid,count))
 
-    if id == 0:
+    if postid == 0:
         print("ID is zero, inserting")
         create_post (random.randint(1,10000000), url) #add url into table
         return makeTextJson("We haven't seen  this link before. Thanks for sharing. Track trending topics here: goo.gl/w8vGrv")
@@ -405,7 +401,6 @@ def connect():
         if conn is not None:
             conn.close()
             print('Database connection closed.')
-
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))

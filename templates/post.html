@@ -4,46 +4,36 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-<style>
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-</style>
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+  <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
 </head>
 <body>
 
-<a href="/">Home</a>
-<a href="/new">New Post</a>
+<div class="pure-menu pure-menu-horizontal">
+    <ul class="pure-menu-list">
+        <li class="pure-menu-item"><a href="/" class="pure-menu-link">Home</a></li>
+        <li class="pure-menu-item"><a href="/new" class="pure-menu-link">New Post</a></li>
+    </ul>
+</div>
 
-
+<div>
 {% block content %}
     <h3>Post Summary</h3>
     <p>{{ summary }}</p>
 
     <h3>Join the Discussion</h3>
-    <form method="POST">
-        <input id ="textbox" name="text" placeholder="Comment..">
-        <input type="submit">
+
+    <form class="pure-form" method="POST">
+        <input id ="textbox" name="text" class="pure-input-1-3" placeholder="Comment..">
+        <input type="submit" class="pure-button pure-input-1-5 pure-button-primary">
     </form>
 
     <p>
-      <table>
+      <table class="pure-table pure-table-horizontal">
       <thead>
       <tr>
       <th>Comment</th>
-      <th>Crreated</th>
+      <th>Created</th>
       <th>Upvotes</th>
       <th>Downvotes</th>
       </tr>
@@ -52,15 +42,22 @@ tr:nth-child(even) {
     {% for row in result %}
       <tr>
           <td>{{ row[2] }}</td>
-          <td> {{ row[3] }}</td>
-          <td> {{ row[4] }}</td>
-          <td> {{ row[5] }}</td>
+          <td>{{ row[3] }}</td>
+          <td><button class="pure-button">
+          <i class="fa fa-thumbs-up"></i>
+          {{ row[4] }}
+          </button></td>
+          <td><button class="pure-button">
+          <i class="fa fa-thumbs-down"></i>
+          {{ row[5] }}
+          </button></td>
       </tr>
     {% endfor %}
       </tbody>
       </table>
     </p>
 {% endblock %}
+</div>
 
 </body>
 </html>

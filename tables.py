@@ -5,12 +5,10 @@ from textblob import TextBlob
 
 def create_tables():
 
-    print("Inside create tables")
     """ create tables in the PostgreSQL database"""
     params = config()
     # connect to the PostgreSQL server
     conn = psycopg2.connect(**params)
-    print ("Opened database successfully")
 
     cur = conn.cursor()
     cur.execute('''CREATE TABLE IF NOT EXISTS POSTS
@@ -20,7 +18,6 @@ def create_tables():
           COMMENTS  INT,
           COUNT         INT);''')
 
-    print ("Post created successfully")
 
     cur.execute('''CREATE TABLE IF NOT EXISTS COMMENTS
          (POST_ID INT NOT NULL,
@@ -29,8 +26,6 @@ def create_tables():
           CREATED  TIMESTAMP NOT NULL,
           UPVOTES  INT,
           DOWNVOTES INT);''')
-    print ("Comments Table created successfully")
-
 
     conn.commit()
     conn.close()
@@ -49,7 +44,7 @@ def show_table():
 
     cur = conn.cursor()
 
-    cur.execute("SELECT POST_ID, DATA, COUNT from POSTS ORDER BY COUNT DESC")
+    cur.execute("SELECT POST_ID, DATA, COUNT, COMMENTS from POSTS ORDER BY COUNT DESC")
     rows = cur.fetchall()
 
     #table_text = ""
@@ -74,12 +69,6 @@ def show_post(postid):
         cur.execute("SELECT POST_ID, COMMENT_ID, DATA, CREATED, UPVOTES, DOWNVOTES  from COMMENTS where POST_ID = {0} ORDER BY UPVOTES DESC".format(postid));
         rows = cur.fetchall()
 
-        #table_text = ""
-        #for row in rows:
-         #  table_text += "Post ID = " + str(row[0])
-          # table_text += "Text = " + row[1]
-           #table_text += "Count = " + str(row[2]) + "\n"
-
         conn.close()
 
         return rows
@@ -87,7 +76,7 @@ def show_post(postid):
 def create_post(postid, text):
     """ insert a new post into the vendors table """
 
-    print("inside insert to tables")
+    print("inside create post")
 
     # read database configuration
     params = config()
@@ -172,7 +161,7 @@ def lookup_table(text):
 
 def get_post_summary(postid):
     #currently send the top comment, latet this is the key logic to send response
-    print("inside get comment summary")
+    print("inside get post summary")
 
     # read database configuration
     params = config()
@@ -194,12 +183,13 @@ def get_post_summary(postid):
             topcomment = row[2]
         catcomments = catcomments + row[2]
 
-    blob = TextBlob(catcomments)
-    response =  "The Top comment is:" + topcomment +  ".The overall polarity is {0} and subjectivity is {1}.".format(round(blob.sentiment.polarity,2),round(blob.sentiment.subjectivity,2))
-
     if count == 0:
         #no comments, ask user to comment
         response = "Sorry, we don't have any comments, be the first one to comment: http://greffy.herokuapp.com/post/" + str(postid)
+    else:
+        blob = TextBlob(catcomments)
+        response =  "The Top comment is:" + topcomment +  ".The overall polarity is {0} and subjectivity is {1}.".format(round(blob.sentiment.polarity,2),round(blob.sentiment.subjectivity,2))
+
 
     print(response)
     return response
@@ -222,3 +212,33 @@ def update_table_count(postid, count):
 
         print "Update operation done successfully for POST_ID {0} and count {1}".format(postid,count)
         conn.close()
+
+def comment_upvote(comment_id):
+    """ update post with count """
+
+    print("inside lookup to tables")
+
+    # read database configuration
+    params = config()
+    # connect to the PostgreSQL database
+    conn = psycopg2.connect(**params)
+
+    cur = conn.cursor()
+
+    # Get Corresponding comment
+    cur.execute("SELECT COMMENT_ID, UPVOTES from COMMENTS where COMMENT_ID = {0} ORDER BY COUNT DESC".format(comment_id));
+    rows = cur.fetchall()
+
+    for row in rows:
+        upvotes = row[1]
+        break
+
+    upvotes = upvotes+1
+
+    # Update Comments count of post
+    cur.execute("UPDATE COMMENTS set UPVOTES = {0} where COMMENT_ID = {1}".format(upvotes,comment_id));
+    conn.commit()
+
+
+    print ("Comment upvote completed")
+    conn.close()

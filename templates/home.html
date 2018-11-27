@@ -4,38 +4,28 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-<style>
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-</style>
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+  <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
 </head>
 <body>
 
-<h2>Trending Posts</h2>
 
-<a href="/new">New Post</a>
+<h2>New Post</h2>
+    <form class="pure-form" method="POST">
+      <input id ="textbox" name="text" class="pure-input-1-3" placeholder="Enter new post">
+      <input type="submit" class="pure-button pure-input-1-5 pure-button-primary">
+    </form>
+
+<h2>Trending Posts</h2>
 
 {% block content %}
     <p>
-      <table>
+      <table class="pure-table pure-table-horizontal">
       <thead>
       <tr>
       <th>Content</th>
       <th>Shared</th>
-      <th>View></th>
+      <th>View</th>
       </tr>
       </thead>
       <tbody>
@@ -43,7 +33,14 @@ tr:nth-child(even) {
       <tr>
           <td>{{ row[1]}}</td>
           <td> {{ row[2] }}</td>
-          <td> <a href="/post/{{ row[0] }}">View Comments></td>
+          <td>
+            <a href="/post/{{ row[0] }}">
+              <button class="pure-button">
+              <i class="fa fa-comments"></i>
+              {{ row[3] }}
+              </button>
+            </a>
+          </td>
       </tr>
     {% endfor %}
       </tbody>
