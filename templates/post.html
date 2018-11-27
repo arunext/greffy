@@ -24,24 +24,35 @@ tr:nth-child(even) {
 </head>
 <body>
 
-<h2>Trending Posts</h2>
+<h1>Post Details</h1>
 
+<a href="/">Home</a>
 <a href="/new">New Post</a>
+
+<h2>Join the Discussion</h2>
+<form method="POST">
+    <input id ="textbox" name="text">
+    <input type="submit">
+</form>
 
 {% block content %}
     <p>
       <table>
       <thead>
       <tr>
-      <th>Content</th>
-      <th>Shared</th>
+      <th>Comment</th>
+      <th>Crreated</th>
+      <th>Upvotes</th>
+      <th>Downvotes</th>
       </tr>
       </thead>
       <tbody>
     {% for row in result %}
       <tr>
-          <td>{{ row[1]}}</td>
-          <td> {{ row[2] }}</td>
+          <td>{{ row[2] }}</td>
+          <td> {{ row[3] }}</td>
+          <td> {{ row[4] }}</td>
+          <td> {{ row[5] }}</td>
       </tr>
     {% endfor %}
       </tbody>

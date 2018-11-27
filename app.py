@@ -41,7 +41,8 @@ def my_form():
 @app.route('/')
 def display_table():
     result = show_table()
-    return render_template("result.html",result = result)
+    return render_template("home.html",result = result)
+
 
 @app.route('/new', methods=['POST'])
 def my_form_post():
@@ -58,6 +59,19 @@ def my_form_post():
     #return processed_text
     return redirect("/")
 
+#post pages
+@app.route('/post/<postid>')
+def display_post(postid):
+    #do your code here
+    result = show_post(postid)
+    return render_template("post.html",result = result)
+
+@app.route('/post/<postid>', methods=['POST'])
+def post_create_comment(postid):
+    text = request.form['text']
+    print("Got Comment" +  text)
+    create_comment (postid,random.randint(1,10000000), text)
+    return redirect("/post/" + postid)
 
 def processRequest(req):
     print ("started processing ...")
@@ -268,9 +282,6 @@ def makeWebhookResult(data):
 #Creating a URL in DB
 def processUrlDB(url):
 
-    print("creating tables with" + url)
-    create_tables() #creating table, later check if table exists.
-
     id = 0
     count = 0
     id, count = lookup_table(url)
@@ -278,11 +289,11 @@ def processUrlDB(url):
 
     if id == 0:
         print("ID is zero, inserting")
-        insert_tables (random.randint(1,10000000), url) #add url into table
+        create_post (random.randint(1,10000000), url) #add url into table
         return makeTextJson("We haven't seen  this link before. Thanks for sharing. Track trending topics here: goo.gl/w8vGrv")
     else:
         print("ID is not zero, updating")
-        update_table(id, count+1)
+        update_table_count(id, count+1)
         return makeTextJson("This link was shared {0} times with us. For more info visit goo.gl/w8vGrv".format(count+1))
 
 

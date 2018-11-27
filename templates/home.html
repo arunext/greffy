@@ -1,0 +1,55 @@
+<!doctype html>
+
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2>Trending Posts</h2>
+
+<a href="/new">New Post</a>
+
+{% block content %}
+    <p>
+      <table>
+      <thead>
+      <tr>
+      <th>Content</th>
+      <th>Shared</th>
+      <th>View></th>
+      </tr>
+      </thead>
+      <tbody>
+    {% for row in result %}
+      <tr>
+          <td>{{ row[1]}}</td>
+          <td> {{ row[2] }}</td>
+          <td> <a href="/post/{{ row[0] }}">View Comments></td>
+      </tr>
+    {% endfor %}
+      </tbody>
+      </table>
+    </p>
+{% endblock %}
+
+</body>
+</html>
