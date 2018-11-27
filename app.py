@@ -64,7 +64,8 @@ def my_form_post():
 def display_post(postid):
     #do your code here
     result = show_post(postid)
-    return render_template("post.html",result = result)
+    summary = get_post_summary(postid)
+    return render_template("post.html",result = result, summary = summary)
 
 @app.route('/post/<postid>', methods=['POST'])
 def post_create_comment(postid):
@@ -294,7 +295,7 @@ def processUrlDB(url):
     else:
         print("ID is not zero, updating")
         update_table_count(postid, count+1)
-        response = get_comment_summary(postid)
+        response = get_post_summary(postid)
         return makeTextJson(response)
 
 

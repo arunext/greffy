@@ -24,18 +24,20 @@ tr:nth-child(even) {
 </head>
 <body>
 
-<h1>Post Details</h1>
-
 <a href="/">Home</a>
 <a href="/new">New Post</a>
 
-<h2>Join the Discussion</h2>
-<form method="POST">
-    <input id ="textbox" name="text" placeholder="Comment..">
-    <input type="submit">
-</form>
 
 {% block content %}
+    <h3>Post Summary</h3>
+    <p>{{ summary }}</p>
+
+    <h3>Join the Discussion</h3>
+    <form method="POST">
+        <input id ="textbox" name="text" placeholder="Comment..">
+        <input type="submit">
+    </form>
+
     <p>
       <table>
       <thead>
