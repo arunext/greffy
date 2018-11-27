@@ -296,6 +296,7 @@ def processUrlDB(url):
         print("ID is not zero, updating")
         update_table_count(postid, count+1)
         response = get_post_summary(postid)
+        response =  response + " Read more on greffy/herokuapp.com/post/" + postid
         return makeTextJson(response)
 
 
