@@ -1,6 +1,7 @@
 import psycopg2
 from config import config
 import datetime
+from textblob import TextBlob
 
 def create_tables():
 
@@ -80,6 +81,8 @@ def show_post(postid):
            #table_text += "Count = " + str(row[2]) + "\n"
 
         conn.close()
+
+        get_post_summary(postid)
         return rows
 
 def create_post(postid, text):
@@ -168,7 +171,7 @@ def lookup_table(text):
 
     return postid, count
 
-def get_comment_summary(postid):
+def get_post_summary(postid):
     #currently send the top comment, latet this is the key logic to send response
     print("inside get comment summary")
 
@@ -184,15 +187,22 @@ def get_comment_summary(postid):
 
     count = 0
 
+    catcomments = ""
+
     for row in rows:
         count = count + 1
-        response = row[2]
-        break
+        if count == 1:
+            topcomment = row[2]
+        catcomments = catcomments + row[2]
+
+    blob = TextBlob(catcomments)
+    response =  "The Top comment is:" + topcomment +  "\nThe overall polarity is {0} and subjectivity is {1}.".format(round(blob.sentiment.polarity,2),round(blob.sentiment.subjectivity,2))
 
     if count == 0:
         #no comments, ask user to comment
         response = "Sorry, we don't have any comments, be the first one to comment: http://greffy.herokuapp.com/post/" + str(postid)
 
+    print(response)
     return response
 
 def update_table_count(postid, count):

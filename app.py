@@ -294,7 +294,7 @@ def processUrlDB(url):
     else:
         print("ID is not zero, updating")
         update_table_count(postid, count+1)
-        response = get_comment_summary(postid)
+        response = get_post_summary(postid)
         return makeTextJson(response)
 
 
