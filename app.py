@@ -282,10 +282,10 @@ def makeWebhookResult(data):
 #Creating a URL in DB
 def processUrlDB(url):
 
-    id = 0
+    postid = 0
     count = 0
-    id, count = lookup_table(url)
-    print("lookup returned id= {0}, count = {1}".format(id,count))
+    postid, count = lookup_table(url)
+    print("lookup returned id= {0}, count = {1}".format(postid,count))
 
     if id == 0:
         print("ID is zero, inserting")
@@ -293,8 +293,9 @@ def processUrlDB(url):
         return makeTextJson("We haven't seen  this link before. Thanks for sharing. Track trending topics here: goo.gl/w8vGrv")
     else:
         print("ID is not zero, updating")
-        update_table_count(id, count+1)
-        return makeTextJson("This link was shared {0} times with us. For more info visit goo.gl/w8vGrv".format(count+1))
+        update_table_count(postid, count+1)
+        response = get_comment_summary(postid)
+        return makeTextJson(response)
 
 
 def makeTextJson(data):

@@ -168,6 +168,33 @@ def lookup_table(text):
 
     return postid, count
 
+def get_comment_summary(postid):
+    #currently send the top comment, latet this is the key logic to send response
+    print("inside get comment summary")
+
+    # read database configuration
+    params = config()
+    # connect to the PostgreSQL database
+    conn = psycopg2.connect(**params)
+
+    cur = conn.cursor()
+
+    cur.execute("SELECT POST_ID, COMMENT_ID, DATA, CREATED, UPVOTES, DOWNVOTES  from COMMENTS where POST_ID = {0} ORDER BY UPVOTES DESC".format(postid));
+    rows = cur.fetchall()
+
+    count = 0
+
+    for row in rows:
+        count = count + 1
+        response = row[2]
+        break
+
+    if count == 0:
+        #no comments, ask user to comment
+        response = "Sorry, we don't have any comments, be the first one to comment: http://greffy.herokuapp.com/post/" + str(postid)
+
+    return response
+
 def update_table_count(postid, count):
 
         """ update post with count """
@@ -183,7 +210,6 @@ def update_table_count(postid, count):
 
         cur.execute("UPDATE POSTS set COUNT = {0} where POST_ID = {1}".format(count,postid));
         conn.commit()
-        print "Total number of rows updated :", cur.rowcount
 
-        print "Update operation done successfully for POST_ID {0} and count {1}".format(postids,count);
+        print "Update operation done successfully for POST_ID {0} and count {1}".format(postid,count)
         conn.close()
