@@ -269,7 +269,7 @@ def comment_downvote(comment_id):
         downvotes = downvotes+1
 
         # Update Comments count of post
-        cur.execute("UPDATE COMMENTS set UPVOTES = {0} where COMMENT_ID = {1}".format(downvotes,comment_id));
+        cur.execute("UPDATE COMMENTS set DOWNVOTES = {0} where COMMENT_ID = {1}".format(downvotes,comment_id));
         conn.commit()
 
 
