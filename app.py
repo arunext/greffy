@@ -70,6 +70,16 @@ def post_create_comment(postid):
     create_comment (postid,random.randint(1,10000000), text)
     return redirect("/post/" + postid)
 
+@app.route('/comments/upvote/<commentid>')
+def post_upvote_comment(commentid):
+    postid = comment_upvote(commentid)
+    return redirect("/post/"+ str(postid))
+
+@app.route('/comments/downvote/<commentid>')
+def post_downvote_comment(commentid):
+    postid = comment_downvote(commentid)
+    return redirect("/post/"+ str(postid))
+
 def processRequest(req):
     print ("started processing ...")
 
@@ -287,7 +297,7 @@ def processUrlDB(url):
     if postid == 0:
         print("ID is zero, inserting")
         create_post (random.randint(1,10000000), url) #add url into table
-        return makeTextJson("We haven't seen  this link before. Thanks for sharing. Track trending topics here: goo.gl/w8vGrv")
+        return makeTextJson("We haven't seen  this link before. Thanks for sharing. Start the conversation about this on: goo.gl/w8vGrv")
     else:
         print("ID is not zero, updating")
         update_table_count(postid, count+1)

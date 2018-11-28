@@ -216,7 +216,7 @@ def update_table_count(postid, count):
 def comment_upvote(comment_id):
     """ update post with count """
 
-    print("inside lookup to tables")
+    print("inside upvote comment")
 
     # read database configuration
     params = config()
@@ -226,7 +226,7 @@ def comment_upvote(comment_id):
     cur = conn.cursor()
 
     # Get Corresponding comment
-    cur.execute("SELECT COMMENT_ID, UPVOTES from COMMENTS where COMMENT_ID = {0} ORDER BY COUNT DESC".format(comment_id));
+    cur.execute("SELECT COMMENT_ID, UPVOTES, POST_ID from COMMENTS where COMMENT_ID = {0} ORDER BY UPVOTES DESC".format(comment_id));
     rows = cur.fetchall()
 
     for row in rows:
@@ -242,3 +242,39 @@ def comment_upvote(comment_id):
 
     print ("Comment upvote completed")
     conn.close()
+
+    #return post ID so that redirect can use it
+    return (row[2])
+
+def comment_downvote(comment_id):
+        """ update comment with dwnvote """
+
+        print("inside downvote comment")
+
+        # read database configuration
+        params = config()
+        # connect to the PostgreSQL database
+        conn = psycopg2.connect(**params)
+
+        cur = conn.cursor()
+
+        # Get Corresponding comment
+        cur.execute("SELECT COMMENT_ID, DOWNVOTES, POST_ID from COMMENTS where COMMENT_ID = {0} ORDER BY DOWNVOTES DESC".format(comment_id));
+        rows = cur.fetchall()
+
+        for row in rows:
+            downvotes = row[1]
+            break
+
+        downvotes = downvotes+1
+
+        # Update Comments count of post
+        cur.execute("UPDATE COMMENTS set UPVOTES = {0} where COMMENT_ID = {1}".format(downvotes,comment_id));
+        conn.commit()
+
+
+        print ("Comment upvote completed")
+        conn.close()
+
+        #return post ID so that redirect can use it
+        return (row[2])

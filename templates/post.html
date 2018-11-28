@@ -43,14 +43,22 @@
       <tr>
           <td>{{ row[2] }}</td>
           <td>{{ row[3] }}</td>
-          <td><button class="pure-button">
-          <i class="fa fa-thumbs-up"></i>
-          {{ row[4] }}
-          </button></td>
-          <td><button class="pure-button">
-          <i class="fa fa-thumbs-down"></i>
-          {{ row[5] }}
-          </button></td>
+          <td>
+            <a href="/comments/upvote/{{ row[1] }}">
+              <button class="pure-button">
+              <i class="fa fa-thumbs-up"></i>
+              {{ row[4] }}
+              </button>
+            </a>
+          </td>
+          <td>
+            <a href="/comments/downvote/{{ row[1] }}">
+              <button class="pure-button">
+              <i class="fa fa-thumbs-down"></i>
+              {{ row[5] }}
+              </button>
+            </a>
+          </td>
       </tr>
     {% endfor %}
       </tbody>
