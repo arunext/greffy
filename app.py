@@ -303,7 +303,8 @@ def processUrlDB(url):
         print("ID is not zero, updating")
         update_table_count(postid, count+1)
         topcomment, polarity = get_post_summary(postid)
-        response =  "Top Comment: "+ topcomment + "  Overall Polarity is:" + polarity + " Join the discussion on greffy.herokuapp.com/post/" + str(postid)
+        response =  "Top Comment: "+ topcomment + "  Overall Polarity is: " + str(polarity) + " Join the discussion on greffy.herokuapp.com/post/" + str(postid)
+        print response
         return makeTextJson(response)
 
 
