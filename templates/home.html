@@ -4,17 +4,22 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
-  <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+      <title>Greffy</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="static/css/uikit.min.css" />
+      <script src="static/js/uikit.min.js"></script>
+      <script src="static/js/uikit-icons.min.js"></script>
 </head>
 <body>
+<div class="uk-container uk-container-expand">
 
-
-<h2>New Post</h2>
-    <form class="pure-form" method="POST">
-      <input id ="textbox" name="text" class="pure-input-1-3" placeholder="Enter new post">
-      <input type="submit" class="pure-button pure-input-1-5 pure-button-primary">
-    </form>
+<form method="POST">
+    <div class="uk-margin" >
+        <input id ="textbox" name="text" class="uk-textarea" rows="3" placeholder="What's on your mind?">
+        <input type="submit">
+    </div>
+</form>
 
 <h2>Trending Posts</h2>
 
@@ -32,21 +37,14 @@
     {% for row in result %}
       <tr>
           <td>{{ row[1]}}</td>
-          <td> {{ row[2] }}</td>
-          <td>
-            <a href="/post/{{ row[0] }}">
-              <button class="pure-button">
-              <i class="fa fa-comments"></i>
-              {{ row[3] }}
-              </button>
-            </a>
-          </td>
+          <td><a href="" uk-icon="social">  {{ row[2] }}  </a></td>
+          <td><a href="/post/{{ row[0] }}" uk-icon="comments">  {{ row[3] }}  </a></td>
       </tr>
     {% endfor %}
       </tbody>
       </table>
     </p>
 {% endblock %}
-
+</div>
 </body>
 </html>

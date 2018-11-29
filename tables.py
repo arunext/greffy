@@ -188,6 +188,7 @@ def get_post_summary(postid):
         response = "Sorry, we don't have any comments, be the first one to comment: http://greffy.herokuapp.com/post/" + str(postid)
     else:
         blob = TextBlob(catcomments)
+        # TODO add overall positive, neutral negative instead of polarity
         response =  "The Top comment is:" + topcomment +  ".The overall polarity is {0} and subjectivity is {1}.".format(round(blob.sentiment.polarity,2),round(blob.sentiment.subjectivity,2))
 
 
