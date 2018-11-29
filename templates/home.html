@@ -44,14 +44,15 @@
   <div class="uk-margin uk-width-2-3@m uk-padding-small" >
 
     {% for row in result %}
-    <hr class="uk-divider-small uk-align-center">
-      <p> {{ row[1]}} <p>
-        <a href="" class="uk-align-right" uk-icon="social"> {{ row[2] }}</a>
-        <a href="/post/{{ row[0] }}" class="uk-align-right" uk-icon="comment"> {{ row[3] }} </a>
           <!--<td class="uk-width-4-6">{{ row[2] }}</td>
           <td class="uk-width-1-6"><a href="/comments/upvote/{{ row[1] }}" uk-icon="triangle-up">  {{ row[4] }} </a></td>
           <td class="uk-width-1-6"><a href="/comments/downvote/{{ row[1] }}" uk-icon="triangle-down">  {{ row[4] }} </a></td>
           <hr class="uk-divider-icon"> -->
+          <div class="uk-card uk-card-default uk-card-body">
+            <p>{{ row[1] }}</p>
+            <a href="" class="uk-align-right" uk-icon="social"> {{ row[2] }}</a>
+            <a href="/post/{{ row[0] }}" class="uk-align-right" uk-icon="comment"> {{ row[3] }} </a>
+          </div>
     {% endfor %}
   </div>
 {% endblock %}
