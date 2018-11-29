@@ -7,15 +7,15 @@
       <title>Greffy</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="shortcut icon" href="/static/images/logo.png">
-      <link rel="stylesheet" href="/static/css/uikit.min.css" />
-      <script src="/static/js/uikit.min.js"></script>
-      <script src="/static/js/uikit-icons.min.js"></script>
+      <link rel="shortcut icon" href="../static/images/logo.png">
+      <link rel="stylesheet" href="../static/css/uikit.min.css" />
+      <script src="../static/js/uikit.min.js"></script>
+      <script src="../static/js/uikit-icons.min.js"></script>
 </head>
 <body>
   <nav class="uk-navbar-container" uk-navbar>
       <div class="uk-navbar-left">
-          <img src="/static/images/logo.png" height="50" width="50"><p class="uk-text-bold uk-text-large"> greffy </p>
+          <img src="../static/images/logo.png" height="50" width="50"><p class="uk-text-bold uk-text-large"> greffy </p>
       </div>
 
       <div class="uk-navbar-right">
@@ -44,26 +44,16 @@
       </form>
 
     <div class="uk-margin uk-width-2-3@m uk-padding-small" >
-      <p>
-        <table class="uk-table-striped uk-padding-small">
-        <thead>
-        <tr>
-        <th>Comment</th>
-        <th>(+)ve</th>
-        <th>(-)ve</th>
-        </tr>
-        </thead>
-        <tbody>
       {% for row in result %}
-        <tr>
-            <td class="uk-width-4-6">{{ row[2] }}</td>
+      <hr class="uk-divider-small uk-align-center">
+        <p>  {{ row[2] }}<p>
+          <a href="/comments/downvote/{{ row[1] }}" class="uk-align-right" uk-icon="arrow-down"> {{ row[4] }} </a>
+          <a href="/comments/upvote/{{ row[1] }}" class="uk-align-right" uk-icon="arrow-up"> {{ row[4] }} </a>
+            <!--<td class="uk-width-4-6">{{ row[2] }}</td>
             <td class="uk-width-1-6"><a href="/comments/upvote/{{ row[1] }}" uk-icon="triangle-up">  {{ row[4] }} </a></td>
-            <td class="uk-width-1-6"><a href="/comments/downvote/{{ row[1] }}" uk-icon="triangle-down">  {{ row[5] }}  </a></td>
-        </tr>
+            <td class="uk-width-1-6"><a href="/comments/downvote/{{ row[1] }}" uk-icon="triangle-down">  {{ row[4] }} </a></td>
+            <hr class="uk-divider-icon"> -->
       {% endfor %}
-        </tbody>
-        </table>
-      </p>
       </div>
       </div>
   {% endblock %}
