@@ -47,6 +47,7 @@ def my_form_post():
 @app.route('/')
 def display_table():
     result = show_table()
+    #find a way to send polarity here as well to show label, will be interesting
     return render_template("home.html",result = result)
 
 @app.route('/', methods=['POST'])
@@ -60,8 +61,8 @@ def home_post():
 def display_post(postid):
     #do your code here
     result = show_post(postid)
-    summary = get_post_summary(postid)
-    return render_template("post.html",result = result, summary = summary)
+    summary, polarity = get_post_summary(postid)
+    return render_template("post.html",result = result, summary = summary, polarity = polarity)
 
 @app.route('/post/<postid>', methods=['POST'])
 def post_create_comment(postid):

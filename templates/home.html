@@ -32,26 +32,28 @@
 <div class="uk-container uk-container-expand">
 
 <form method="POST">
-    <div class="uk-margin uk-width-2-3@m uk-padding-small" >
-        <input id ="textbox" name="text" class="uk-textarea" rows="3" placeholder="What's on your mind?">
-        <button type="submit" class="uk-button uk-button-default uk-align-right">Submit</button>
+    <div class="uk-grid-match uk-width-1-2@m">
+        <textarea id ="textbox" name="text" class="uk-textarea" rows="3" placeholder="What's on your mind?"></textarea>
+        <button type="submit" class="uk-button uk-button-default uk-align-right">Share</button>
     </div>
 </form>
 
-<h3>What's trending</h3>
+<h3>Top</h3>
 
 {% block content %}
-  <div class="uk-margin uk-width-2-3@m uk-padding-small" >
+  <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
 
     {% for row in result %}
           <!--<td class="uk-width-4-6">{{ row[2] }}</td>
           <td class="uk-width-1-6"><a href="/comments/upvote/{{ row[1] }}" uk-icon="triangle-up">  {{ row[4] }} </a></td>
           <td class="uk-width-1-6"><a href="/comments/downvote/{{ row[1] }}" uk-icon="triangle-down">  {{ row[4] }} </a></td>
           <hr class="uk-divider-icon"> -->
-          <div class="uk-card uk-card-default uk-card-body">
+          <div>
+          <div class="uk-card uk-card-default uk-card-hover uk-card-body">
             <p>{{ row[1] }}</p>
             <a href="" class="uk-align-right" uk-icon="social"> {{ row[2] }}</a>
             <a href="/post/{{ row[0] }}" class="uk-align-right" uk-icon="comment"> {{ row[3] }} </a>
+          </div>
           </div>
     {% endfor %}
   </div>

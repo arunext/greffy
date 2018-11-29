@@ -32,7 +32,15 @@
   <div class="uk-container uk-container-expand">
 
     <div class="uk-card uk-card-default uk-card-body uk-width-2-3@m">
-      <h3 class="uk-card-title">Summary</h3>
+      <p class="uk-card-title">Summary
+      {% if polarity > 0.25 %}
+      <span class="uk-label uk-label-success">{{ polarity }}</span>
+      {% elif polarity > -0.25 %}
+      <span class="uk-label uk-label-warning">{{ polarity }}</span>
+      {% else %}
+      <span class="uk-label uk-label-danger">{{ polarity }}</span>
+      {% endif %}
+    </p>
       <p>{{ summary }}</p>
     </div>
 

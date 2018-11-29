@@ -185,15 +185,19 @@ def get_post_summary(postid):
 
     if count == 0:
         #no comments, ask user to comment
-        response = "Sorry, we don't have any comments, be the first one to comment: http://greffy.herokuapp.com/post/" + str(postid)
+        topcomment = "Sorry, we don't have any comments, be the first one to comment: http://greffy.herokuapp.com/post/" + str(postid)
+        polarity = 0
+        subjectivity = 0
     else:
         blob = TextBlob(catcomments)
         # TODO add overall positive, neutral negative instead of polarity
-        response =  "The Top comment is:" + topcomment +  ".The overall polarity is {0} and subjectivity is {1}.".format(round(blob.sentiment.polarity,2),round(blob.sentiment.subjectivity,2))
 
+        polarity =round(blob.sentiment.polarity,2)
+        subjectivity = round(blob.sentiment.subjectivity,2)
 
-    print(response)
-    return response
+    print(topcomment,polarity)
+
+    return topcomment,polarity
 
 def update_table_count(postid, count):
 
