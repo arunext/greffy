@@ -4,46 +4,65 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-      <title>Greffy</title>
+      <title>greffy: get perspective</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="shortcut icon" href="/static/images/logo.png">
       <link rel="stylesheet" href="static/css/uikit.min.css" />
       <script src="static/js/uikit.min.js"></script>
       <script src="static/js/uikit-icons.min.js"></script>
 </head>
 <body>
+  <nav class="uk-navbar-container" uk-navbar>
+      <div class="uk-navbar-left">
+          <img src="/static/images/logo.png" height="50" width="50"><p class="uk-text-bold uk-text-large"> greffy </p>
+      </div>
+
+      <div class="uk-navbar-right">
+
+          <ul class="uk-navbar-nav">
+              <li class="uk-active"><a href="/">Home</a></li>
+              <li><a href="/new">New</a></li>
+          </ul>
+
+      </div>
+  </nav>
+
+
 <div class="uk-container uk-container-expand">
 
 <form method="POST">
-    <div class="uk-margin" >
+    <div class="uk-margin uk-width-2-3@m uk-padding-small" >
         <input id ="textbox" name="text" class="uk-textarea" rows="3" placeholder="What's on your mind?">
-        <input type="submit">
+        <button type="submit" class="uk-button uk-button-default uk-align-right">Submit</button>
     </div>
 </form>
 
 <h2>Trending Posts</h2>
 
 {% block content %}
+  <div class="uk-margin uk-width-2-3@m uk-padding-small" >
     <p>
-      <table class="pure-table pure-table-horizontal">
+      <table class="uk-table-striped">
       <thead>
       <tr>
       <th>Content</th>
       <th>Shared</th>
-      <th>View</th>
+      <th>Comments</th>
       </tr>
       </thead>
       <tbody>
     {% for row in result %}
       <tr>
-          <td>{{ row[1]}}</td>
-          <td><a href="" uk-icon="social">  {{ row[2] }}  </a></td>
-          <td><a href="/post/{{ row[0] }}" uk-icon="comments">  {{ row[3] }}  </a></td>
+          <td class="uk-width-4-6">{{ row[1]}}</td>
+          <td class="uk-width-1-6"><a href="" uk-icon="social">  {{ row[2] }} </a></td>
+          <td class="uk-width-1-6"><a href="/post/{{ row[0] }}" uk-icon="comments">  {{ row[3] }}  </a></td>
       </tr>
     {% endfor %}
       </tbody>
       </table>
     </p>
+  </div>
 {% endblock %}
 </div>
 </body>
