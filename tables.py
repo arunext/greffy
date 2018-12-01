@@ -2,6 +2,8 @@ import psycopg2
 from config import config
 import datetime
 from textblob import TextBlob
+import nltk
+from nltk.corpus import stopwords
 
 def create_tables():
 
@@ -54,6 +56,7 @@ def show_table():
        #table_text += "Count = " + str(row[2]) + "\n"
 
     conn.close()
+
     return rows
 
 def show_post(postid):
@@ -191,6 +194,11 @@ def get_post_summary(postid):
     else:
         blob = TextBlob(catcomments)
         # TODO add overall positive, neutral negative instead of polarity
+
+
+        blob.sentences
+
+        words  = b
 
         polarity =round(blob.sentiment.polarity,2)
         subjectivity = round(blob.sentiment.subjectivity,2)
