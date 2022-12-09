@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="uk-container uk-container-small uk-position-relative">
+
+  <h3 class="uk-text-lead uk-text-center">Create and share a post</h3>
+    <div class="uk-margin-large-top">
+       <form action="/" method="POST">
+          {{ mdeditor.load() }}
+          <button type="submit" class="uk-button uk-button-primary uk-align-right">Create Post</button>
+      </form>
+    </div>
+</div>
+
+{% endblock %}

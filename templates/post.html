@@ -4,50 +4,78 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-      <title>Greffy</title>
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TM5C3SJ');</script>
+<!-- End Google Tag Manager -->
+
+      <title>Greffy - Comments on {{ title }} </title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="shortcut icon" href="https://i.ibb.co/RQ20sFp/Logo.png">
+      <link rel="shortcut icon" href="https://i.ibb.co/72tZHPj/logo.png">
       <!-- UIkit CSS -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/css/uikit.min.css" />
 
       <!-- UIkit JS -->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit-icons.min.js"></script>
+<!-- Button click automate. TODO- call AJAX to update DB -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script>
+      $(document).ready(function(){
+        $("#upvote").click(function(){
+            $.ajax({
+               url: "/comments/upvote/5879826",
+               success: function(response) {
+                 print("In function")
+                 alert(response);
+                 return response;
+               }
+            });
+        });
+        $("#downvote").click(function(){
+          $('#downvotes').html(function(i, val) { return +val+1 });
+      });
+      </script>
+<!-- Button click automate. TODO- call AJAX to update DB -->
+
 </head>
 <body>
-  <nav class="uk-navbar-container" uk-navbar>
-      <div class="uk-navbar-left">
-          <img src="https://i.ibb.co/RQ20sFp/Logo.png" height="50" width="50"><p class="uk-text-bold uk-text-large"> greffy </p>
-      </div>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TM5C3SJ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
-      <div class="uk-navbar-right">
-
-          <ul class="uk-navbar-nav">
-              <li><a href="/">Home</a></li>
-              <li class="uk-active"><a href="/new">New</a></li>
-          </ul>
-
+<div  uk-sticky="bottom: #offset">
+  <nav class="uk-navbar-container uk-padding-small uk-padding-remove-bottom uk-padding-remove-top" uk-navbar>
+      <div class="uk-navbar-left uk-padding-small uk-padding-remove-bottom uk-padding-remove-top">
+      <a href="/"> <img src="https://i.ibb.co/cNSGM8d/logotext.png" height="50" width="109"></a>
       </div>
   </nav>
+</div>
+
 
   {% block content %}
   <div class="uk-container uk-container-expand">
 
     <div class="uk-card uk-card-default uk-card-body uk-width-2-3@m">
-      <p class="uk-card-title">Summary
-      {% if polarity > 0.25 %}
-      <span class="uk-label uk-label-success">{{ polarity }}</span>
-      {% elif polarity > -0.25 %}
-      <span class="uk-label uk-label-warning">{{ polarity }}</span>
-      {% else %}
-      <span class="uk-label uk-label-danger">{{ polarity }}</span>
-      {% endif %}
-    </p>
+      <h4 class="uk-comment-body"><a class="uk-link-reset" href="{{ url }}">{{ title }}</a></h4>
+      <p>Summary
+          {% if polarity > 0.25 %}
+          <span class="uk-label uk-label-success">{{ polarity }}</span>
+          {% elif polarity > -0.25 %}
+          <span class="uk-label uk-label-warning">{{ polarity }}</span>
+          {% else %}
+          <span class="uk-label uk-label-danger">{{ polarity }}</span>
+          {% endif %}
+      </p>
       <p>{{ summary }}</p>
     </div>
 
-      <form method="POST">
+      <form method="POST"
           <div class="uk-margin uk-width-2-3@m uk-padding-small" >
               <input id ="textbox" name="text" class="uk-textarea" rows="3" placeholder="Join the discussion">
               <button type="submit" class="uk-button uk-button-default uk-align-right">Comment</button>
@@ -57,16 +85,21 @@
     <div class="uk-margin uk-width-2-3@m uk-padding-small" >
       {% for row in result %}
       <hr class="uk-divider-small uk-align-center">
-        <p>  {{ row[2] }}<p>
-          <a href="/comments/downvote/{{ row[1] }}" class="uk-align-right" uk-icon="arrow-down"> {{ row[4] }} </a>
-          <a href="/comments/upvote/{{ row[1] }}" class="uk-align-right" uk-icon="arrow-up"> {{ row[4] }} </a>
+        <p>  {{ row[2] }}
+              <button id="downvote"class="uk-button-small uk-align-right" uk-icon="arrow-down">
+                <a id="downvotes"> {{ row[5] }} </a>
+              </button>
+              <button id="upvote"class="uk-button-small uk-align-right" uk-icon="arrow-up">
+                <a id="upvotes"> {{ row[4] }}</a>
+              </button>
+        </p>
             <!--<td class="uk-width-4-6">{{ row[2] }}</td>
             <td class="uk-width-1-6"><a href="/comments/upvote/{{ row[1] }}" uk-icon="triangle-up">  {{ row[4] }} </a></td>
             <td class="uk-width-1-6"><a href="/comments/downvote/{{ row[1] }}" uk-icon="triangle-down">  {{ row[4] }} </a></td>
             <hr class="uk-divider-icon"> -->
       {% endfor %}
       </div>
-      </div>
+    </div>
   {% endblock %}
 
 </body>

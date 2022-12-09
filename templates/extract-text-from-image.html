@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="uk-container uk-container-small uk-position-relative">
+
+    <h2 class="uk-text-lead uk-text-center">Extract Text from Image</h2>
+
+    <div class="js-upload uk-placeholder uk-text-center">
+      <span uk-icon="icon: cloud-upload"></span>
+      <span class="uk-text-middle">Attach an image by dropping them here. Or</span>
+      <form class="uk-grid-small" uk-grid method="POST" enctype=multipart/form-data>
+              <div class="uk-width-3-4@s">
+                <input type=file name=file>
+              </div>
+              <div class="uk-width-1-4@s">
+                <select name="lang_select" class="uk-select" id="form-horizontal-select">
+                    <option>english</option>
+                    <option>malayalam</option>
+                    <option>hindi</option>
+                </select>
+              </div>
+              <div class="uk-width-4-4@s uk-align-right">
+                <button type="submit" class="uk-button uk-button-primary uk-align-right uk-margin">Extract Text</button>
+              </div>
+      </form>
+    </div>
+
+<hr class="uk-divider-small">
+<div class="uk-container uk-container-small uk-position-relative">
+    <div class="uk-card uk-card-hover uk-card-small uk-card-body">
+            <p> {{ res }}</p>
+    </div>
+    <img data-src=" {{ image }} " width="1800" height="1200" alt="" uk-img>
+</div>
+
+{% endblock %}

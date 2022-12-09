@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="uk-container uk-container-small uk-position-relative">
+  <h2 class="uk-text-lead uk-text-center">Extract top 5 keywords from Text</h2>
+    <div>
+        <form method="POST">
+          <textarea id ="textbox" name="text" class="uk-textarea" rows="3" placeholder="Enter text to extract keywords from"></textarea>
+          <button type="submit" class="uk-button uk-button-primary uk-align-right uk-margin">Get Keywords</button>
+       </form>
+
+    </div>
+
+<hr class="uk-divider-small">
+
+  <div>
+          <div>
+            <div class="uk-card uk-card-hover uk-card-small uk-card-body">
+                    <p> {{ res }}</p>
+            </div>
+          </div>
+</div>
+</div>
+
+{% endblock %}

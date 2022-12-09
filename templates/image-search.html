@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="uk-container uk-container-small uk-position-relative">
+
+  <h2 class="uk-text-lead uk-text-left">Get Insights on Stories</h2>
+
+  <form method="POST" enctype=multipart/form-data>
+    <div>
+        <textarea id ="textbox" name="text" class="uk-textarea" rows="3" placeholder="Enter some text. eg. a Whatsapp forward"></textarea>
+        <div class="js-upload" uk-form-custom>
+            <input type="file" name=file>
+            <button class="uk-button uk-button-secondary" type="button" uk-icon="cloud-upload">Image </button>
+        </div>
+        <button type="submit" class="uk-button uk-button-primary uk-align-right">Get Insights</button>
+    </div>
+  </form>
+
+
+<hr class="uk-divider-small">
+
+<div>
+        <div>
+          <div class="uk-card uk-card-hover uk-card-small uk-card-body">
+                  <p> {{ res }}</p>
+                  {% if discussionlink|length %}
+                   <a class="uk-button uk-button-primary uk-align-right" href="{{ discussionlink }}" target="_blank">Click for more</a>
+                   {% endif %}
+                   <img data-src=" {{ image }} " width="1800" height="1200" alt="" uk-img>
+          </div>
+        </div>
+</div>
+</div>
+
+{% endblock %}

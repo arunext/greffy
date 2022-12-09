@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="uk-container uk-container-small uk-position-relative">
+
+  <div>
+    <div class="uk-card uk-card-default uk-padding-small uk-card-hover">
+                {{ summary }}
+    </div>
+
+    <div class="uk-section uk-section-default">
+      <hr class="uk-divider-small uk-align-center">
+        <p><b>Comment Summary:</b>  {{ commentsummary }} </p>
+    </div>
+
+    <form method="POST"
+      <div class="uk-card uk-card-hover">
+              <input id ="textbox" name="text" class="uk-textarea" rows="3" placeholder="Your thoughts?">
+              <button type="submit" class="uk-button uk-button-default uk-align-right">Post</button>
+      </div>
+    </form>
+
+      <div class="uk-section uk-section-default">
+        <h3 class="uk-card-title">Comments List</h3>
+        <ul class="uk-list uk-list-striped">
+        {% for row in result %}
+          <li>  {{ row[2] }} </li>
+                <!-- remove upvotes since it redirects to a new page. Try this out maybe: https://teamtreehouse.com/community/creating-a-like-feature-on-flask
+                <a href="/comments/downvote/{{ row[1] }}"><button id="downvote"class="uk-button-small uk-align-right" uk-icon="arrow-down">{{ row[5] }}</button></a>
+                <a href="/comments/upvote/{{ row[1] }}"><button id="downvote"class="uk-button-small uk-align-right" uk-icon="arrow-up">{{ row[4] }}</button></a>
+                --->
+
+              <!--<td class="uk-width-4-6">{{ row[2] }}</td>
+              <td class="uk-width-1-6"><a href="/comments/upvote/{{ row[1] }}" uk-icon="triangle-up">  {{ row[4] }} </a></td>
+              <td class="uk-width-1-6"><a href="/comments/downvote/{{ row[1] }}" uk-icon="triangle-down">  {{ row[4] }} </a></td>
+              <hr class="uk-divider-icon"> -->
+        {% endfor %}
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="uk-container uk-container-small uk-position-relative">
+
+  <h1 class="uk-text-lead uk-text-center">Comment on any page on the internet</h1>
+    <div class="uk-margin-large-top">
+        <form method="POST">
+          <input id ="textbox" name="text" class="uk-textarea" placeholder="Enter a url and click GO"></input>
+          <button type="submit" class="uk-button uk-button-primary uk-align-right">Go</button>
+       </form>
+    </div>
+</div>
+
+{% endblock %}

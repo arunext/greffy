@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+
+  <script>
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  gtag('consent', 'default', {
+    ad_storage: 'denied'
+  });
+</script>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TM5C3SJ');</script>
+  <!-- End Google Tag Manager -->
+
+
+
+      <title>Greffy: {{ title }}</title>
+      <meta property="og:title" content="{{ title }}"/>
+      <meta property="og:description" content="{{ summary }}" />
+      <meta property="og:image" itemprop="image" content="{{ image }}" />
+      <meta name="description" content="{{ summary }}">
+
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="shortcut icon" href="https://i.ibb.co/dWZ0Bwc/54515329-630078234102259-6355646300578381824-n.png">
+      <!-- UIkit CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/css/uikit.min.css" />
+
+      <!-- UIkit JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit-icons.min.js"></script>
+
+      <!-- HTML editor CSS and JavaScript -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/css/htmleditor.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/css/htmleditor.js"></script>
+
+</head>
+<body>
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TM5C3SJ"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+
+  <!-- To display thumbnail image on Whatsapp etc-->
+  <link itemprop="thumbnailUrl" href="{{ image }}">
+
+  <span itemprop="thumbnail" itemscope itemtype="http://schema.org/ImageObject">
+        <link itemprop="url" href="{{ image }}">
+  </span>
+
+  <header>
+      <!-- Main Navbar -->
+      <div class="uk-container uk-container-expand">
+      <nav class="uk-navbar" uk-navbar="mode: click">
+          <div class="uk-navbar-left">
+
+                <a href="/" class="uk-navbar-item uk-logo">
+                  <!-- Commenting out logo.
+                  <img uk-svg src="https://i.ibb.co/dWZ0Bwc/54515329-630078234102259-6355646300578381824-n.png" class="uk-margin-small-right" height="40" width="40">
+                  -->
+                  greffy
+                </a>
+
+            </div>
+            <div class="uk-navbar-right">
+              <ul class="uk-navbar-nav uk-visible@s">
+                <li>
+                    <a href="#">Tools</a>
+                    <div class="uk-navbar-dropdown">
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                            <li><a href="/summarize-url">URL Summary</a></li>
+                          <li><a href="/twitter">Search Tweets</a></li>
+                        </ul>
+                    </div>
+                </li>
+              </ul>
+          <a href="#" class="uk-navbar-toggle uk-hidden@s" uk-navbar-toggle-icon uk-toggle="target: #sidenav"></a>
+      </div>
+    </nav>
+    </div>
+</header>
+
+      <div id="sidenav" uk-offcanvas="flip: true" class="uk-offcanvas">
+      <div class="uk-offcanvas-bar">
+          <ul class="uk-nav">
+            <li><a href="/summarize-text">Text Summary</a></li>
+            <li><a href="/twitter">Search Tweets</a></li>
+          </ul>
+         </div>
+     </div>
+  {% block content %}
+  {% endblock %}
+</div>
+
+<hr class="uk-divider-icon">
+
+</body>
+</html>

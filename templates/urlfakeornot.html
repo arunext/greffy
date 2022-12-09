@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="uk-container uk-container-small uk-position-relative">
+
+    <div>
+        <form method="POST">
+          <input id ="textbox" name="text" class="uk-textarea" placeholder="Enter a url to check if it's fake"></input>
+          <button type="submit" class="uk-button uk-button-primary uk-align-right">Check Fakeness</button>
+       </form>
+    </div>
+</div>
+
+<hr class="uk-divider-small">
+
+<div>
+  <div class="uk-card uk-card-default uk-width-2-3@m uk-padding-large uk-card-hover uk-align-center">
+    <h3 class="uk-card-title">Summary</h3>
+          {{ res }}
+  <div>
+</div>
+{% endblock %}

@@ -1,66 +1,31 @@
-<!doctype html>
-
-<!DOCTYPE html>
-<html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<head>
-      <title>greffy: Get Perspective</title>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="shortcut icon" href="https://i.ibb.co/RQ20sFp/Logo.png">
-      <!-- UIkit CSS -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/css/uikit.min.css" />
-
-      <!-- UIkit JS -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.24/js/uikit-icons.min.js"></script>
-</head>
-<body>
-  <nav class="uk-navbar-container" uk-navbar>
-      <div class="uk-navbar-left">
-          <img src="https://i.ibb.co/RQ20sFp/Logo.png" height="50" width="50"><p class="uk-text-bold uk-text-large"> greffy </p>
-      </div>
-
-      <div class="uk-navbar-right">
-
-          <ul class="uk-navbar-nav">
-              <li class="uk-active"><a href="/">Home</a></li>
-              <li><a href="/new">New</a></li>
-          </ul>
-
-      </div>
-  </nav>
-
-
-<div class="uk-container uk-container-expand">
-
-<form method="POST">
-    <div class="uk-grid-match uk-width-1-2@m">
-        <textarea id ="textbox" name="text" class="uk-textarea" rows="3" placeholder="What's on your mind?"></textarea>
-        <button type="submit" class="uk-button uk-button-default uk-align-right">Share</button>
-    </div>
-</form>
-
-<h3>Top</h3>
+{% extends "layout.html" %}
 
 {% block content %}
-  <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
 
-    {% for row in result %}
-          <!--<td class="uk-width-4-6">{{ row[2] }}</td>
-          <td class="uk-width-1-6"><a href="/comments/upvote/{{ row[1] }}" uk-icon="triangle-up">  {{ row[4] }} </a></td>
-          <td class="uk-width-1-6"><a href="/comments/downvote/{{ row[1] }}" uk-icon="triangle-down">  {{ row[4] }} </a></td>
-          <hr class="uk-divider-icon"> -->
-          <div>
-          <div class="uk-card uk-card-default  uk-card-hover uk-card-body">
-            <p>{{ row[1] }}</p>
-            <a href="" class="uk-align-right" uk-icon="social"> {{ row[2] }}</a>
-            <a href="/post/{{ row[0] }}" class="uk-align-right" uk-icon="comment"> {{ row[3] }} </a>
+<div class="uk-card uk-card-default uk-width-2-3@m uk-card-hover uk-align-center">
+
+  <h1 class="uk-heading-small uk-text-center">Tools to deep dive into the internet</h1>
+
+  <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
+    <div>
+        <a href="/summarize-url">
+          <div class="uk-card uk-card-hover uk-card-body">
+              <h3 class="uk-card-title">Summarize URL</h3>
+              <p>Get a summarry of the content within any URL</p>
           </div>
+        </a>
+    </div>  
+    <div>
+        <a href="/twitter">
+          <div class="uk-card uk-card-hover uk-card-body">
+              <h3 class="uk-card-title">Search Twitter</h3>
+              <p>Search Twitter for topics and get a list of tweets</p>
           </div>
-    {% endfor %}
+        </a>
+      </div>
   </div>
-{% endblock %}
 </div>
+{% endblock %}
+
 </body>
 </html>
