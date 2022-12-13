@@ -4,6 +4,7 @@ import urllib
 #Following needs to be pip installed from shell
 import validators
 import re
+import os
 
 from main import *
 
@@ -23,9 +24,8 @@ def searchTweet(query):
   from bs4 import BeautifulSoup
   from html import unescape
 
-  auth = tweepy.OAuthHandler(
-    os.environ['TWITTER_CONSUMER_KEY'],
-    os.environ['TWITTER_CONSUMER_SECRET'])
+  auth = tweepy.OAuthHandler(os.environ['TWITTER_CONSUMER_KEY'],
+                             os.environ['TWITTER_CONSUMER_SECRET'])
   auth.set_access_token(os.environ['TWITTER_ACCESS_KEY'],
                         os.environ['TWITTER_ACCESS_SECRET'])
 
@@ -77,48 +77,62 @@ def put_last_tweet(file, Id):
 
 def respondToTweet(file='tweet_ID.txt'):
   last_id = get_last_tweet(file)
+
   mentions = api.mentions_timeline(since_id=last_id)
 
-  print("noone mentioned me...")
+  print("Checking mentions")
 
   if len(mentions) == 0:
     return
 
   new_id = 0
-  print("someone mentioned me...")
+
+  print("Yes, there seems to be one")
 
   for mention in reversed(mentions):
     print(str(mention.id) + '-' + mention.text)
     new_id = mention.id
 
-    url = mention.entities['urls'][0]['expanded_url']
-    valid = validators.url(url)
+    valid = False
 
-    print(url)
+    #Initialized response to default response.
+    response = "Sorry, tweet or parent tweet doesn't contain a URL. @ me with a URL or in response to a tweet with a URL to get a summary of the content."
 
-    #If URL, get a summary.
+    if "url" in mention.entities:
+      url = mention.entities['urls'][0]['expanded_url']
+      valid = validators.url(url)
+
+    #If there is URL in the tweet, get a summary of the content within the URL.
     if valid == True:
       response = summarizeurl(url)
     else:
-      response = "Sorry, not a URL"
+      print("Checking Original tweet)")
+      print(mention.in_reply_to_status_id_str)
+      if mention.in_reply_to_status_id_str:
+        #If this tweet is in reply to a tweet, check if the Original tweet has a URL
+        parenttweet = api.get_status(mention.in_reply_to_status_id_str)
+        url = parenttweet.entities['urls'][0]['expanded_url']
+        valid = validators.url(url)
+        if valid == True:
+          #Parent tweet has a URL, summarize it.
+          response = summarizeurl(url)
 
-    print(response)
+    response = status = '@' + mention.user.screen_name + " " + response
 
-    # Split the text into 280-character chunks
-    chunks = [response[i:i + 280] for i in range(0, len(response), 280)]
+    #Breakdown blob into sentences.
+    blob = TextBlob(response)
 
     try:
+      #Like the tweet
       api.create_favorite(mention.id_str)
       reply_to_id = mention.id_str
-      for chunk in chunks:
-        print("Updating status in reply to" + reply_to_id)
-        newstatus = api.Client.create_tweet(
-          text='@' + mention.user.screen_name + " " + chunk,
-          in_reply_to_status_id=reply_to_id)
+      for sentence in blob.sentences:
+        newstatus = api.update_status(sentence[:279],
+                                      in_reply_to_status_id=reply_to_id)
         #Have the chunks in the same thread.
         reply_to_id = newstatus.id_str
-    except:
-      print("Error in replying to {}".format(mention.id_str))
+    except tweepy.errors.TweepyException as e:
+      print(e)
 
   put_last_tweet(file, new_id)
   return
